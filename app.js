@@ -17,7 +17,7 @@ app.get('/api/data', (req, res) => {
       id: 19343823,
       type: 'admin'
     });
-  }, 5000);
+  }, 1000);
 });
 
 app.get('*', (req, res) => {

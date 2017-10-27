@@ -4,9 +4,7 @@ import Request from '../lib/request';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: null,
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -22,7 +20,16 @@ export default class App extends React.Component {
     return (
       <div>
         <div className="module">
-          <p>welcome</p>
+          <p>ajax</p>
+          {this.state.data ? (
+            <div>
+              <p>{this.state.data.username}</p>
+              <p>{this.state.data.type}</p>
+              <p>{this.state.data.id}</p>
+            </div>
+          ) : (
+            <p>loading...</p>
+          )}
         </div>
       </div>
     );

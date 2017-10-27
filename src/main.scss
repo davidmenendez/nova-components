@@ -1,0 +1,64 @@
+@import './styles/vars';
+@import './styles/global';
+@import './styles/typography';
+@import './styles/button';
+
+.container {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.jumbotron {
+  background: $grey;
+  color: #eee;
+
+  h1 {
+    font-size: 7.594rem;
+  }
+  
+  i {
+    color: $red;
+    animation: 3s infinite alternate fader;
+  }
+}
+
+.module {
+  text-align: left;
+  background: $grey;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  color: #eee;
+}
+
+@keyframes fader {
+  from {
+    transform: rotate(0deg)
+  }
+
+  to {
+    transform: rotate(-180deg)
+  }
+}
+
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+}
+.loader {
+  border-top: .25rem solid rgba(255, 255, 255, 0.2);
+  border-right: .25rem solid rgba(255, 255, 255, 0.2);
+  border-bottom: .25rem solid rgba(255, 255, 255, 0.2);
+  border-left: .25rem solid #fff;
+  animation: load8 1000ms infinite linear;
+}
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

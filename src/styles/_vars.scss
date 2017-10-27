@@ -1,0 +1,15 @@
+$red: #D64044;
+$redHover: #BC383C;
+$grey: #282c34;
+
+@mixin breakpoint($point) {
+  @if $point == lg {
+    @media (min-width: 62rem) { @content ; }
+ }
+  @else if $point == md {
+    @media (min-width: 48rem) { @content ; }
+ }
+   @else if $point == sm {
+    @media (min-width: 36rem) { @content ; }
+ }
+}

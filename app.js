@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var request = require('request');
 var app = express();
 
 app.set('views', path.join(__dirname, './src/views'));
@@ -11,13 +12,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/data', (req, res) => {
-  setTimeout(() => {
-    res.json({
-      username: 'joe@aol.com',
-      id: 19343823,
-      type: 'admin'
-    });
-  }, 1000);
+  request('https://jsonplaceholder.typicode.com/users', (error, response, body) => {
+    res.json(JSON.parse(body));
+  });
 });
 
 app.get('*', (req, res) => {

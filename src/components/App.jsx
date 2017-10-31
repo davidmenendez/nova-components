@@ -4,7 +4,9 @@ import Request from '../lib/request';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: [],
+    };
   }
 
   componentDidMount() {
@@ -13,21 +15,23 @@ export default class App extends React.Component {
 
   doRequest() {
     const req = Request('GET', '/api/data');
-    req.then(data => this.setState({ data })).catch(res => console.error(res));
+    req.then(data => {
+      this.setState({ data })
+    }).catch(res => console.error(res));
   }
 
   render() {
+    const content = this.state.data.map((obj) => (
+      <div key={obj.id}>
+        <p>{obj.name}</p>
+      </div>
+    ));
+
     return (
       <div>
         <div className="module">
-          <p>ajax</p>
-          {this.state.data ? (
-            <div>
-              <p>{this.state.data.username}</p>
-              <p>{this.state.data.type}</p>
-              <p>{this.state.data.id}</p>
-            </div>
-          ) : (
+          <h3>ajax</h3>
+          {this.state.data ? content : (
             <div className="loader" />
           )}
         </div>

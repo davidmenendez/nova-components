@@ -28,7 +28,7 @@ export default class App extends React.Component {
               <p>{this.state.data.id}</p>
             </div>
           ) : (
-            <p>loading...</p>
+            <div className="loader" />
           )}
         </div>
       </div>

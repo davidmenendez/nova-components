@@ -1,5 +1,6 @@
 import React from 'react';
 import Request from '../lib/request';
+import Table from './Table';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,17 +22,13 @@ export default class App extends React.Component {
   }
 
   render() {
-    const content = this.state.data.map(obj => (
-      <div key={obj.id}>
-        <p>{obj.name}</p>
-      </div>
-    ));
-
     return (
       <div>
         <div className="module">
-          <h3>ajax</h3>
-          {this.state.data.length ? content : (
+          <h3>table</h3>
+          {this.state.data.length ? (
+            <Table data={this.state.data} cols={['name', 'username', 'email']} />
+          ) : (
             <div className="loader" />
           )}
         </div>

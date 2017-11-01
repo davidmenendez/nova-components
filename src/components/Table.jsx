@@ -56,22 +56,26 @@ export default class Table extends React.Component {
           <p className="table-title">{title}</p>
           <input onChange={this.setFilter} placeholder="filter" type="text" />
         </div>
-        <table className="dataTable">
-          <thead>
-            <tr>
-              {cols.map(col => (
-                <th className={this.getClassName(col)} onClick={this.setSort}>{col}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.map(d => (
+        {tableData.length ? (
+          <table className="dataTable">
+            <thead>
               <tr>
-                {cols.map(c => <td>{d[c]}</td>)}
+                {cols.map(col => (
+                  <th className={this.getClassName(col)} onClick={this.setSort}>{col}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {tableData.map(d => (
+                <tr>
+                  {cols.map(c => <td>{d[c]}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>no results</p>
+        )}
       </div>
     );
   }

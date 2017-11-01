@@ -5,15 +5,21 @@ export default class Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      filter: '',
       sortAsc: true,
       sortCol: null,
     };
     this.getClassName = this.getClassName.bind(this);
+    this.setFilter = this.setFilter.bind(this);
     this.setSort = this.setSort.bind(this);
   }
 
   getClassName(col) {
     return this.state.sortCol === col ? `sort sort--${this.state.sortAsc ? 'up' : 'down'}` : '';
+  }
+
+  setFilter(e) {
+    this.setState({ filter: e.target.value });
   }
 
   setSort(e) {
@@ -31,27 +37,42 @@ export default class Table extends React.Component {
       sortCol,
     } = this.state;
 
-    const tableData = this.props.data.slice().sort((a, b) => (
+    const {
+      data,
+      cols,
+      title,
+    } = this.props;
+
+    const tableData = data.slice().sort((a, b) => (
       sortAsc ? a[sortCol] > b[sortCol] : a[sortCol] < b[sortCol]
-    ));
+    )).filter((o) => {
+      const results = cols.map(col => o[col].toLowerCase().indexOf(this.state.filter) >= 0);
+      return results.includes(true);
+    });
 
     return (
-      <table className="dataTable">
-        <thead>
-          <tr>
-            {this.props.cols.map(col => (
-              <th className={this.getClassName(col)} onClick={this.setSort}>{col}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map(d => (
+      <div>
+        <div className="table-header">
+          <p className="table-title">{title}</p>
+          <input onChange={this.setFilter} placeholder="filter" type="text" />
+        </div>
+        <table className="dataTable">
+          <thead>
             <tr>
-              {this.props.cols.map(c => <td>{d[c]}</td>)}
+              {cols.map(col => (
+                <th className={this.getClassName(col)} onClick={this.setSort}>{col}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {tableData.map(d => (
+              <tr>
+                {cols.map(c => <td>{d[c]}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }
@@ -59,4 +80,5 @@ export default class Table extends React.Component {
 Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   cols: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.string.isRequired,
 };

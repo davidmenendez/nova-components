@@ -15,13 +15,13 @@ export default class App extends React.Component {
 
   doRequest() {
     const req = Request('GET', '/api/data');
-    req.then(data => {
-      this.setState({ data })
-    }).catch(res => console.error(res));
+    req.then((data) => {
+      this.setState({ data });
+    }).catch(err => console.error(err));
   }
 
   render() {
-    const content = this.state.data.map((obj) => (
+    const content = this.state.data.map(obj => (
       <div key={obj.id}>
         <p>{obj.name}</p>
       </div>
@@ -31,7 +31,7 @@ export default class App extends React.Component {
       <div>
         <div className="module">
           <h3>ajax</h3>
-          {this.state.data ? content : (
+          {this.state.data.length ? content : (
             <div className="loader" />
           )}
         </div>

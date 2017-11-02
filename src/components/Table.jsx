@@ -46,7 +46,10 @@ export default class Table extends React.Component {
     const tableData = data.slice().sort((a, b) => (
       sortAsc ? a[sortCol] > b[sortCol] : a[sortCol] < b[sortCol]
     )).filter((o) => {
-      const results = cols.map(col => o[col].toLowerCase().indexOf(this.state.filter) >= 0);
+      const results = cols.map((col) => {
+        if (typeof o[col] !== 'number') return o[col].toLowerCase().indexOf(this.state.filter) >= 0;
+        return o[col].toString().indexOf(this.state.filter) >= 0;
+      });
       return results.includes(true);
     });
 

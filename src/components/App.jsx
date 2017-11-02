@@ -27,7 +27,7 @@ export default class App extends React.Component {
         <div className="module">
           <h2>table</h2>
           {this.state.data.length ? (
-            <Table data={this.state.data} cols={['name', 'username', 'email']} title="users" />
+            <Table data={this.state.data} cols={['id', 'name', 'username', 'email']} title="users" />
           ) : (
             <div className="loader" />
           )}

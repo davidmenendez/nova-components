@@ -41,30 +41,46 @@ export default class Table extends React.Component {
       data,
       cols,
       title,
+      filter,
+      sort,
     } = this.props;
 
-    const tableData = data.slice().sort((a, b) => (
-      sortAsc ? a[sortCol] > b[sortCol] : a[sortCol] < b[sortCol]
-    )).filter((o) => {
-      const results = cols.map((col) => {
-        if (typeof o[col] !== 'number') return o[col].toLowerCase().indexOf(this.state.filter) >= 0;
-        return o[col].toString().indexOf(this.state.filter) >= 0;
+    let tableData = data.slice();
+    if (sort) {
+      tableData.sort((a, b) => (
+        sortAsc ? a[sortCol] > b[sortCol] : a[sortCol] < b[sortCol]
+      ));
+    }
+
+    if (filter) {
+      tableData = tableData.filter((o) => {
+        const results = cols.map((col) => {
+          if (typeof o[col] !== 'number') return o[col].toLowerCase().indexOf(this.state.filter) >= 0;
+          return o[col].toString().indexOf(this.state.filter) >= 0;
+        });
+        return results.includes(true);
       });
-      return results.includes(true);
-    });
+    }
 
     return (
       <div>
         <div className="table-header">
           <p className="table-title">{title}</p>
-          <input onChange={this.setFilter} placeholder="filter" type="text" />
+          {filter &&
+            <input onChange={this.setFilter} placeholder="filter" type="text" />
+          }
         </div>
         {tableData.length ? (
-          <table className="dataTable">
+          <table className={sort ? 'table--sortable' : ''}>
             <thead>
               <tr>
                 {cols.map(col => (
-                  <th className={this.getClassName(col)} onClick={this.setSort}>{col}</th>
+                  <th
+                    className={this.getClassName(col)}
+                    onClick={sort ? this.setSort : null}
+                  >
+                    {col}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -84,8 +100,15 @@ export default class Table extends React.Component {
   }
 }
 
+Table.defaultProps = {
+  sort: true,
+  filter: true,
+};
+
 Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   cols: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.string.isRequired,
+  sort: PropTypes.bool,
+  filter: PropTypes.bool,
 };

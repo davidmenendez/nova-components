@@ -41,18 +41,18 @@ export default class Table extends React.Component {
       data,
       cols,
       title,
-      filter,
-      sort,
+      filtering,
+      sorting,
     } = this.props;
 
     let tableData = data.slice();
-    if (sort) {
+    if (sorting) {
       tableData.sort((a, b) => (
         sortAsc ? a[sortCol] > b[sortCol] : a[sortCol] < b[sortCol]
       ));
     }
 
-    if (filter) {
+    if (filtering) {
       tableData = tableData.filter((o) => {
         const results = cols.map((col) => {
           if (typeof o[col] !== 'number') return o[col].toLowerCase().indexOf(this.state.filter) >= 0;
@@ -66,18 +66,18 @@ export default class Table extends React.Component {
       <div>
         <div className="table-header">
           <p className="table-title">{title}</p>
-          {filter &&
+          {filtering &&
             <input onChange={this.setFilter} placeholder="filter" type="text" />
           }
         </div>
         {tableData.length ? (
-          <table className={sort ? 'table--sortable' : ''}>
+          <table className={sorting ? 'table--sortable' : ''}>
             <thead>
               <tr>
                 {cols.map(col => (
                   <th
                     className={this.getClassName(col)}
-                    onClick={sort ? this.setSort : null}
+                    onClick={sorting ? this.setSort : null}
                   >
                     {col}
                   </th>
@@ -101,14 +101,14 @@ export default class Table extends React.Component {
 }
 
 Table.defaultProps = {
-  sort: true,
-  filter: true,
+  sorting: true,
+  filtering: true,
 };
 
 Table.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   cols: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.string.isRequired,
-  sort: PropTypes.bool,
-  filter: PropTypes.bool,
+  sorting: PropTypes.bool,
+  filtering: PropTypes.bool,
 };

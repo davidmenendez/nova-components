@@ -35,6 +35,7 @@ export default class Table extends React.Component {
     const {
       sortAsc,
       sortCol,
+      filter,
     } = this.state;
 
     const {
@@ -53,10 +54,10 @@ export default class Table extends React.Component {
     }
 
     if (filtering) {
-      tableData = tableData.filter((o) => {
+      tableData = tableData.filter((row) => {
         const results = cols.map((col) => {
-          if (typeof o[col] !== 'number') return o[col].toLowerCase().indexOf(this.state.filter) >= 0;
-          return o[col].toString().indexOf(this.state.filter) >= 0;
+          if (typeof row[col] !== 'number') return row[col].toLowerCase().indexOf(filter) >= 0;
+          return row[col].toString().indexOf(filter) >= 0;
         });
         return results.includes(true);
       });

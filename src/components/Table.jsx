@@ -85,9 +85,9 @@ export default class Table extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {tableData.map(d => (
+              {tableData.map(row => (
                 <tr>
-                  {cols.map(c => <td>{d[c]}</td>)}
+                  {cols.map(col => <td>{row[col]}</td>)}
                 </tr>
               ))}
             </tbody>

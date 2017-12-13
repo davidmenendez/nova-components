@@ -25,10 +25,17 @@ section {
   padding: 5rem 0;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
   padding: .25rem .5rem;
   font: inherit;
   color: #333;
   line-height: inherit;
   border: 1px solid $grey;
+  display: block;
+
+  &:invalid {
+    border-color: red;
+    box-shadow: none;
+  }
 }
